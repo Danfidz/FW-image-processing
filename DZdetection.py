@@ -30,11 +30,11 @@ while True:
     success, img = cap.read()
 
     # # Kalau mau cb pict
-    # img = cv2.imread("assets/DZ_pict3.jpeg")
+    # img = cv2.imread("assets/DZ_pict6.jpeg")
 
 
     #processing
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
 
     #getting the limits
     Low_Hue = cv2.getTrackbarPos("Low_Hue", "Trackbar")
@@ -92,10 +92,22 @@ while True:
 
 
                 #print pixel ke layar
-                cv2.putText(img, "top_left", (x1, y1), font, 1, (0,0,0))  
-                cv2.putText(img, "top_right", (x2, y2), font, 1, (0,0,0))  
-                cv2.putText(img, "bottom_left", (x3, y3), font, 1, (0,0,0))  
-                cv2.putText(img, "bottom_right", (x4, y4), font, 1, (0,0,0))  
+                cv2.putText(img, f"({x1}, {y1}, top_left", (x1, y1), font, 1, (0,0,0))  
+                cv2.putText(img, f"({x2}, {y2},top_right", (x2, y2), font, 1, (0,0,0))  
+                cv2.putText(img, f"({x3}, {y3},bottom_left", (x3, y3), font, 1, (0,0,0))  
+                cv2.putText(img, f"({x4}, {y4},bottom_right", (x4, y4), font, 1, (0,0,0))
+
+
+                # Deteksi center dari contour
+                M = cv2.moments(cnt)
+                cX = int(M["m10"] / M["m00"])
+                cY = int(M["m01"] / M["m00"])
+                
+                # draw the contour and center of the shape on the image
+                # cv2.drawContours(img, [cnt], -1, (0, 255, 0), 2)
+                cv2.circle(img, (cX, cY), 7, (255, 255, 255), -1)
+                cv2.putText(img, f"{cX}, {cY}, center", (cX - 20, cY - 20),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
 
 
 
